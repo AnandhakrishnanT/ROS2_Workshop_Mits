@@ -74,5 +74,11 @@ cd ros2direct
 - **Ubuntu 20.04** - ROS Galactic Geochelone
 - **Ubuntu 22.04** - ROS Humble Hawksbill
 
+#### To check the current Distro installed
 
-
+```bash
+printenv
+```
+```bash
+echo $ROS_DISTRO
+```
