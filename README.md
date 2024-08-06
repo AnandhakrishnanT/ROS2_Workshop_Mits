@@ -35,6 +35,12 @@
 - **Iron Irwini**
 - **Jazzy Jalisco**
 
+###Before installing ROS 2, make sure you have Git installed. You can install Git using the following command:
+
+```bash
+sudo apt-get install git
+```
+
 ### [Installation](https://github.com/AnandhakrishnanT/ros2direct)
 
 #### ROS 2 Installation Script
@@ -42,7 +48,11 @@
 You can use the following script to automatically detect your Ubuntu release and install a compatible ROS 2 distro:
 
 ```bash
+sudo git clone https://github.com/AnandhakrishnanT/ros2direct
+
+cd ros2direct
 ./install
+
 ```
 
 #### ROS 1
