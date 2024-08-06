@@ -37,6 +37,13 @@
 
 ### [Installation](https://github.com/AnandhakrishnanT/ros2direct)
 
+#### ROS 2 Installation Script
+
+You can use the following script to automatically detect your Ubuntu release and install a compatible ROS 2 distro:
+
+```bash
+./install
+
 #### ROS 1
 
 - **Ubuntu 14.04** - ROS Indigo
@@ -49,3 +56,9 @@
 - **Ubuntu 18.04** - ROS Eloquent Elusor
 - **Ubuntu 20.04** - ROS Galactic Geochelone
 - **Ubuntu 22.04** - ROS Humble Hawksbill
+
+#### ROS 2 Installation Script
+
+You can use the following script to automatically detect your Ubuntu release and install a compatible ROS 2 distro:
+
+
