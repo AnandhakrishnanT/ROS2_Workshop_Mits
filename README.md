@@ -35,9 +35,14 @@
 - **Iron Irwini**
 - **Jazzy Jalisco**
 
-###Before installing ROS 2, make sure you have Git installed. You can install Git using the following command:
+---
+
+### Prerequisites
+
+Before installing ROS 2, make sure you have Git installed. You can install Git using the following command:
 
 ```bash
+sudo apt-get update
 sudo apt-get install git
 ```
 
@@ -51,6 +56,7 @@ You can use the following script to automatically detect your Ubuntu release and
 sudo git clone https://github.com/AnandhakrishnanT/ros2direct
 
 cd ros2direct
+
 ./install
 
 ```
