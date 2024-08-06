@@ -82,3 +82,32 @@ printenv
 ```bash
 echo $ROS_DISTRO
 ```
+### Sourcing the setup file
+
+```bash
+source /opt/ros/humble/setup.bash
+```
+
+## Creating a Workspace
+```bash
+mkdir -p ~/ws_name/src
+```
+
+### Initialize the Workspace 
+```bash
+colcon build
+```
+#### The colcon tool is used for building ROS 2 packages. If colcon is not installed, you can install it using:
+```bash
+sudo apt-get install python3-colcon-common-extensions
+```
+## Source the Workspace
+```bash
+source install/setup.bash
+```
+
+## Day 2
+ ### Creating a Package
+ ```bash
+ros2 pkg create my_package --build-type ament_cmake
+```
