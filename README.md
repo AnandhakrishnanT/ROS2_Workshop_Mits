@@ -43,6 +43,7 @@ You can use the following script to automatically detect your Ubuntu release and
 
 ```bash
 ./install
+```
 
 #### ROS 1
 
@@ -57,8 +58,5 @@ You can use the following script to automatically detect your Ubuntu release and
 - **Ubuntu 20.04** - ROS Galactic Geochelone
 - **Ubuntu 22.04** - ROS Humble Hawksbill
 
-#### ROS 2 Installation Script
-
-You can use the following script to automatically detect your Ubuntu release and install a compatible ROS 2 distro:
 
 
