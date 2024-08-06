@@ -45,7 +45,10 @@ Before installing ROS 2, make sure you have Git installed. You can install Git u
 sudo apt-get update
 sudo apt-get install git
 ```
+### Official Documentation
 
+   https://docs.ros.org/en/humble/Installation/Ubuntu-Install-Debians.html
+   
 ### [Installation](https://github.com/AnandhakrishnanT/ros2direct)
 
 #### ROS 2 Installation Script
