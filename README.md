@@ -56,9 +56,9 @@ sudo apt-get install git
 You can use the following script to automatically detect your Ubuntu release and install a compatible ROS 2 distro:
 
 ```bash
-sudo git clone https://github.com/AnandhakrishnanT/ros2direct
+sudo git clone https://github.com/linorobot/ros2me
 
-cd ros2direct
+cd ros2me
 
 ./install
 
