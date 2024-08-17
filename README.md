@@ -285,3 +285,28 @@ install(TARGETS
 # Export the dependencies
 ament_package()
 ```
+
+#### Then come to workspace and build / source the workspace using :
+```bash
+cd <your_workspace>
+
+colcon build
+
+source install/setup.bash
+
+```
+
+### To Run The Talker NODE ;
+```bash
+
+ros2 run <your_package_name> talker
+
+```
+### To Run The Subscriber NODE ;
+```bash
+
+ros2 run <your_package_name> listener
+
+```
+
+# TURTLESIM
