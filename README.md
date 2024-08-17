@@ -2,8 +2,6 @@
 
 ## Basic Overview & Installation
 
-### Day 1
-
 ---
 
 ### ROS 1 Distributions
@@ -129,9 +127,10 @@ sudo apt-get install python3-colcon-common-extensions
 source install/setup.bash
 ```
 
-## Day 2
- ### Creating a Package
+ ## Creating a Package
+
+### https://docs.ros.org/en/humble/Tutorials/Beginner-Client-Libraries/Creating-Your-First-ROS2-Package.html
+
  ```bash
 ros2 pkg create my_package --build-type ament_cmake
 ```
-### https://docs.ros.org/en/humble/Tutorials/Beginner-Client-Libraries/Creating-Your-First-ROS2-Package.html
