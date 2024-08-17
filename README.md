@@ -429,3 +429,33 @@ ros2 run <package_name> subscriber
 ```
 
 # TURTLESIM
+
+#### Turtlesim is the Flagship example application for ROS and ROS 2. It demonstrates in simple but effective ways the basic concepts.
+
+## Getting Start with the Turtle simulator
+```bash
+sudo apt update
+
+sudo apt install ros-humble-turtlesim
+```
+#### Check that the package is installed:
+```bash
+ros2 pkg executables turtlesim
+```
+#### To start turtlesim, enter the following command in your terminal:
+```bash
+ros2 run turtlesim turtlesim_node
+```
+#### To move the turtle using keyboard
+```bash
+ros2 run turtlesim turtle_teleop_key
+```
+#### Inspect the Active Nodes
+```bash
+ros2 node list
+```
+#### Check Active Topics
+```bash
+ros2 topic list
+```
+
