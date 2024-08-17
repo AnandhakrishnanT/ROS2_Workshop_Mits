@@ -130,7 +130,7 @@ echo "export ROS_LOCALHOST_ONLY=1" >> ~/.bashrc
 
 ## Creating a Workspace
 ```bash
-mkdir -p ~/ws_name/src
+mkdir -p ~/<ws_name>/src
 ```
 
 ### Initialize the Workspace 
@@ -146,10 +146,142 @@ sudo apt-get install python3-colcon-common-extensions
 source install/setup.bash
 ```
 
- ## Creating a Package
+ # Creating a Package
 
-### https://docs.ros.org/en/humble/Tutorials/Beginner-Client-Libraries/Creating-Your-First-ROS2-Package.html
+## https://docs.ros.org/en/humble/Tutorials/Beginner-Client-Libraries/Creating-Your-First-ROS2-Package.html
+
+## Using cpp
 
  ```bash
-ros2 pkg create my_package --build-type ament_cmake
+cd <your_workspace>/src
+
+ros2 pkg create --build-type ament_cmake --license Apache-2.0 <package_name>
+
+```
+## Creating a Node (Simple Publisher and Subscriber)
+
+![ROSpublisher](https://github.com/user-attachments/assets/0ba9a1b9-f4fd-4e2f-aa1d-8ef9064497d5)
+
+#### Then navigate to src folder inside your created package and lets create our First NODE
+
+```bash
+cd <package_name>/src
+
+gedit publisher.cpp
+
+```
+### publisher.cpp
+
+```bash
+#include <chrono>
+#include <functional>
+#include <memory>
+#include <string>
+
+#include "rclcpp/rclcpp.hpp"
+#include "std_msgs/msg/string.hpp"
+
+using namespace std::chrono_literals;
+
+/* This example creates a subclass of Node and uses std::bind() to register a
+* member function as a callback from the timer. */
+
+class MinimalPublisher : public rclcpp::Node
+{
+  public:
+    MinimalPublisher()
+    : Node("minimal_publisher"), count_(0)
+    {
+      publisher_ = this->create_publisher<std_msgs::msg::String>("topic", 10);
+      timer_ = this->create_wall_timer(
+      500ms, std::bind(&MinimalPublisher::timer_callback, this));
+    }
+
+  private:
+    void timer_callback()
+    {
+      auto message = std_msgs::msg::String();
+      message.data = "Hello, world! " + std::to_string(count_++);
+      RCLCPP_INFO(this->get_logger(), "Publishing: '%s'", message.data.c_str());
+      publisher_->publish(message);
+    }
+    rclcpp::TimerBase::SharedPtr timer_;
+    rclcpp::Publisher<std_msgs::msg::String>::SharedPtr publisher_;
+    size_t count_;
+};
+
+int main(int argc, char * argv[])
+{
+  rclcpp::init(argc, argv);
+  rclcpp::spin(std::make_shared<MinimalPublisher>());
+  rclcpp::shutdown();
+  return 0;
+}
+```
+### subscriber.cpp
+```bash
+#include <memory>
+#include "rclcpp/rclcpp.hpp"
+#include "std_msgs/msg/string.hpp"
+using std::placeholders::_1;
+
+class MinimalSubscriber : public rclcpp::Node
+{
+public:
+  MinimalSubscriber()
+  : Node("minimal_subscriber")
+  {
+    subscription_ = this->create_subscription<std_msgs::msg::String>(
+      "topic", 10, std::bind(&MinimalSubscriber::topic_callback, this, _1));
+  }
+
+private:
+  void topic_callback(const std::shared_ptr<const std_msgs::msg::String> msg) const
+  {
+    RCLCPP_INFO(this->get_logger(), "I heard: '%s'", msg->data.c_str());
+  }
+
+  rclcpp::Subscription<std_msgs::msg::String>::SharedPtr subscription_;
+};
+
+int main(int argc, char * argv[])
+{
+  rclcpp::init(argc, argv);
+  rclcpp::spin(std::make_shared<MinimalSubscriber>());
+  rclcpp::shutdown();
+  return 0;
+}
+```
+### Update the CmakeLists.txt file
+```bash
+cmake_minimum_required(VERSION 3.5)
+project(mypackage)
+ 
+# Default to C++14
+if(NOT CMAKE_CXX_STANDARD)
+  set(CMAKE_CXX_STANDARD 14)
+endif()
+ 
+# Find dependencies
+find_package(ament_cmake REQUIRED)
+find_package(rclcpp REQUIRED)
+find_package(std_msgs REQUIRED)
+ 
+# Declare a C++ executable for talker
+add_executable(talker src/publisher.cpp)
+ament_target_dependencies(talker rclcpp std_msgs)
+ 
+# Declare a C++ executable for listener
+add_executable(listener src/subscriber.cpp)
+ament_target_dependencies(listener rclcpp std_msgs)
+ 
+# Install the executables
+install(TARGETS
+  talker
+  listener
+  DESTINATION lib/${PROJECT_NAME}
+)
+ 
+# Export the dependencies
+ament_package()
 ```
