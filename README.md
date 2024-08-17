@@ -49,7 +49,40 @@ sudo apt-get install git
 
    https://docs.ros.org/en/humble/Installation/Ubuntu-Install-Debians.html
    
-### [Installation](https://github.com/AnandhakrishnanT/ros2direct)
+#### ROS 1
+
+- **Ubuntu 14.04** - ROS Indigo
+- **Ubuntu 16.04** - ROS Kinetic
+- **Ubuntu 18.04** - ROS Melodic
+- **Ubuntu 20.04** - ROS Noetic
+
+#### ROS 2
+
+- **Ubuntu 18.04** - ROS Eloquent Elusor
+- **Ubuntu 20.04** - ROS Galactic Geochelone
+- **Ubuntu 22.04** - ROS Humble Hawksbill
+
+### If your getting Sudoers error , see below :
+ First Switch to root user
+ ```bash
+su
+```
+use  'whoami' command to check user
+```bash
+whoami
+```
+then , 
+```bash
+apt install sudo
+
+usermod -aG sudo <your_username>
+
+exit
+```
+After that restart your virtual machine
+```bash
+reboot
+```
 
 #### ROS 2 Installation Script
 
@@ -63,19 +96,6 @@ cd ros2me
 ./install
 
 ```
-
-#### ROS 1
-
-- **Ubuntu 14.04** - ROS Indigo
-- **Ubuntu 16.04** - ROS Kinetic
-- **Ubuntu 18.04** - ROS Melodic
-- **Ubuntu 20.04** - ROS Noetic
-
-#### ROS 2
-
-- **Ubuntu 18.04** - ROS Eloquent Elusor
-- **Ubuntu 20.04** - ROS Galactic Geochelone
-- **Ubuntu 22.04** - ROS Humble Hawksbill
 
 #### To check the current Distro installed
 
