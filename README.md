@@ -109,10 +109,20 @@ printenv
 ```bash
 echo $ROS_DISTRO
 ```
-### Sourcing the setup file
+### Add sourcing to your shell startup script
 
 ```bash
+gedit .bashrc
+
 source /opt/ros/humble/setup.bash
+```
+OR
+```bash
+echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc
+```
+### By default, ROS 2 communication is not limited to localhost. You can set the environment variable with the following command:
+```bash
+echo "export ROS_LOCALHOST_ONLY=1" >> ~/.bashrc
 ```
 
 ## Creating a Workspace
