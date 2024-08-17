@@ -1,4 +1,6 @@
-# ROS Workshop
+# ROS2 Workshop
+
+![ROS-2_logo](https://github.com/user-attachments/assets/734acefc-bf0a-456d-a5cb-c2e577d20cf5)
 
 ## Basic Overview & Installation
 
