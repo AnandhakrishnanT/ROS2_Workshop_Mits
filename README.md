@@ -65,6 +65,12 @@ sudo apt-get install git
  ```bash
 su
 ```
+if getting authentication failure error , Check User Privileges: Make sure your user is in the sudo group. You can verify this by running:
+```bash
+groups <your-username>
+```
+If your username is listed under sudo, you have the correct privileges. If not, you'll need to add your user to the sudo group
+
 use  'whoami' command to check user
 ```bash
 whoami
