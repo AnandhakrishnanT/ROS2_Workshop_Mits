@@ -309,4 +309,123 @@ ros2 run <your_package_name> listener
 
 ```
 
+## Using python
+```bash
+cd <your_workspace>
+cd <src>
+
+ros2 pkg create --build-type ament_python --license Apache-2.0 <package_name>
+
+cd <package_name>
+
+touch <package_name>/publisher.py
+chmod +x <package_name>/publisher.py
+
+touch <package_name>/subscriber.py
+chmod +x <package_name>/subscriber.py
+
+```
+### publisher.py
+```bash
+import rclpy
+from rclpy.node import Node
+from std_msgs.msg import String
+
+class MinimalPublisher(Node):
+
+    def __init__(self):
+        super().__init__('minimal_publisher')
+        self.publisher_ = self.create_publisher(String, 'topic', 10)
+        timer_period = 0.5  # seconds
+        self.timer = self.create_timer(timer_period, self.timer_callback)
+        self.i = 0
+
+    def timer_callback(self):
+        msg = String()
+        msg.data = f'Hello, world! {self.i}'
+        self.publisher_.publish(msg)
+        self.get_logger().info(f'Publishing: "{msg.data}"')
+        self.i += 1
+
+def main(args=None):
+    rclpy.init(args=args)
+    minimal_publisher = MinimalPublisher()
+    rclpy.spin(minimal_publisher)
+    minimal_publisher.destroy_node()
+    rclpy.shutdown()
+
+if __name__ == '__main__':
+    main()
+
+```
+
+### subscriber.py
+```bash
+import rclpy
+from rclpy.node import Node
+from std_msgs.msg import String
+
+class MinimalSubscriber(Node):
+
+    def __init__(self):
+        super().__init__('minimal_subscriber')
+        self.subscription = self.create_subscription(
+            String,
+            'topic',
+            self.listener_callback,
+            10)
+        self.subscription  # prevent unused variable warning
+
+    def listener_callback(self, msg):
+        self.get_logger().info(f'I heard: "{msg.data}"')
+
+def main(args=None):
+    rclpy.init(args=args)
+    minimal_subscriber = MinimalSubscriber()
+    rclpy.spin(minimal_subscriber)
+    minimal_subscriber.destroy_node()
+    rclpy.shutdown()
+
+if __name__ == '__main__':
+    main()
+
+```
+## Modify setup.py
+```bash
+from setuptools import setup
+
+package_name = '<package_name>'
+
+setup(
+    name=package_name,
+    version='0.0.0',
+    packages=[package_name],
+    data_files=[
+        ('share/ament_index/resource_index/packages',
+            ['resource/' + package_name]),
+        ('share/' + package_name, ['package.xml']),
+    ],
+    install_requires=['setuptools'],
+    zip_safe=True,
+    maintainer='Your Name',
+    maintainer_email='your.email@example.com',
+    description='TODO: Package description',
+    license='TODO: License declaration',
+    tests_require=['pytest'],
+    entry_points={
+        'console_scripts': [
+            'publisher = <package_name>.publisher:main',
+            'subscriber = <package_name>.subscriber:main',
+        ],
+    },
+)
+```
+
+#### Now build/source your workspace and Run the Node
+```bash
+ros2 run <package_name> publisher
+
+ros2 run <package_name> subscriber
+```
+
 # TURTLESIM
