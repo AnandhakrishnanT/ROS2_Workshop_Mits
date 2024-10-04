@@ -499,6 +499,13 @@ ros2 run micro_ros_agent micro_ros_agent serial --dev /dev/ttyUSB0
 ![image](https://github.com/user-attachments/assets/4e75d483-c0e3-4dbe-ac07-aee6213da7e6)
 
 This means the installation of the agent is successful. 
+# Add yourself to  dialout group
+### The dialout group in Linux is a user group that grants permissions to access serial devices, which include things like USB-to-serial converters and other serial communication ports (like your ESP32).
+```bash
+sudo usermod -aG dialout <your_username>
+
+sudo reboot
+```
 
 ## Installing Arduino
 
