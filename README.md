@@ -461,7 +461,7 @@ ros2 topic list
 # micro-ROS
 
 #### Micro-ROS is a framework designed to enable the integration of small devices, such as microcontrollers and embedded systems, with the Robot Operating System (ROS) ecosystem. 
-
+### Supported Hardware : https://micro.ros.org/docs/overview/hardware
 ## Installation
 ```bash
 mkdir microros_ws
