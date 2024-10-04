@@ -458,4 +458,45 @@ ros2 node list
 ```bash
 ros2 topic list
 ```
+# micro-ROS
+
+#### Micro-ROS is a framework designed to enable the integration of small devices, such as microcontrollers and embedded systems, with the Robot Operating System (ROS) ecosystem. 
+
+## Installation
+```bash
+mkdir microros_ws
+cd microros_ws
+
+git clone -b $ROS_DISTRO https://github.com/micro-ROS/micro_ros_setup.git src/micro_ros_setup
+
+sudo apt update && rosdep update
+rosdep install --from-paths src --ignore-src -y
+
+sudo apt-get install python3-pip
+
+colcon build
+source install/local_setup.bash
+
+```
+#### make sure you are still inside the micro-ros ws
+
+```bash
+ros2 run micro_ros_setup create_agent_ws.sh   
+ros2 run micro_ros_setup build_agent.sh
+
+source install/local_setup.bash
+
+```
+
+### Now, let’s give a dry run by running the micro-ROS agent by following the command:
+
+```bash
+ros2 run micro_ros_agent micro_ros_agent serial --dev /dev/ttyACM0
+```
+
+### The result should show something like this:
+![image](https://github.com/user-attachments/assets/4e75d483-c0e3-4dbe-ac07-aee6213da7e6)
+
+This means the installation of the agent is successful. 
+
 
