@@ -491,12 +491,55 @@ source install/local_setup.bash
 ### Now, let’s give a dry run by running the micro-ROS agent by following the command:
 
 ```bash
-ros2 run micro_ros_agent micro_ros_agent serial --dev /dev/ttyACM0
+ros2 run micro_ros_agent micro_ros_agent serial --dev /dev/ttyUSB0
+
 ```
 
 ### The result should show something like this:
 ![image](https://github.com/user-attachments/assets/4e75d483-c0e3-4dbe-ac07-aee6213da7e6)
 
 This means the installation of the agent is successful. 
+
+## Installing Arduino
+
+```bash
+sudo snap install arduino
+```
+
+#### after installing arduino , add the url in the prefernces
+```bash
+https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json, http://arduino.esp8266.com/stable/package_esp8266com_index.json
+```
+
+### then add esp32 board to library from board manager select version V2.0.2
+
+## Then we need to add the micro-ros-arduino library
+
+https://github.com/micro-ROS/micro_ros_arduino/tree/humble
+
+### add this zip file to the library
+
+### then select the example publisher code and upload to esp32!
+
+## take a new terminal and build the micro-ros ws
+```bash
+cd micro_ros_ws/
+colcon build
+source install/setup.bash
+
+ros2 run micro_ros_agent micro_ros_agent serial --dev /dev/ttyUSB0
+
+```
+### in a new terminal check the topic list
+```bash
+ros2 topic list
+```
+
+#### you should see this : "/micro_ros_arduino_node_publisher"
+
+```bash
+ros2 topic echo /micro_ros_arduino_node_publisher  
+```
+
 
 
