@@ -503,6 +503,8 @@ This means the installation of the agent is successful.
 ## Installing Arduino
 
 ```bash
+sudo apt install snapd
+
 sudo snap install arduino
 ```
 
