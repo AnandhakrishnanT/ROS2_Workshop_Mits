@@ -557,7 +557,7 @@ ros2 topic echo /micro_ros_arduino_node_publisher
 
 # Code for ESP32 - ultrasonic sensor Node
 
-'''
+```bash
 
 #include <micro_ros_arduino.h>
 #include <stdio.h>
@@ -664,7 +664,5 @@ void loop() {
   RCSOFTCHECK(rclc_executor_spin_some(&executor, RCL_MS_TO_NS(10)));
 }
 
-'''
 
-
-
+```
