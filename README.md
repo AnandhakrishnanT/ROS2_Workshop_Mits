@@ -666,3 +666,39 @@ void loop() {
 
 
 ```
+# Code for ESP32 - ultrasonic sensor BASIC
+
+```bash
+
+#define TRIG_PIN  5   // Change pin numbers as needed
+#define ECHO_PIN  18
+
+void setup() {
+  Serial.begin(115200);  // ESP32 default Serial speed is often 115200
+  pinMode(TRIG_PIN, OUTPUT);
+  pinMode(ECHO_PIN, INPUT);
+}
+
+void loop() {
+  // Clear the trigger pin
+  digitalWrite(TRIG_PIN, LOW);
+  delayMicroseconds(2);
+
+  // Send a 10 microsecond pulse to trigger pin
+  digitalWrite(TRIG_PIN, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(TRIG_PIN, LOW);
+
+  // Read the echo pin: how long was it HIGH?
+  long duration = pulseIn(ECHO_PIN, HIGH);
+
+  // Calculate the distance (speed of sound = 34300 cm/s)
+  float distance_cm = (duration * 0.0343) / 2;
+
+  Serial.print("Distance: ");
+  Serial.print(distance_cm);
+  Serial.println(" cm");
+
+  delay(500);  // Wait half a second before next reading
+}
+```
