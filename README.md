@@ -513,6 +513,15 @@ sudo reboot
 ```
 
 ## Installing Arduino
+```bash
+wget https://downloads.arduino.cc/arduino-ide_latest_Linux_64bit.tar.xz
+tar -xf arduino-ide_latest_Linux_64bit.tar.xz
+cd arduino-ide_*/
+sudo ./install.sh
+
+```
+
+INstalllation 
 
 ```bash
 sudo apt install snapd
