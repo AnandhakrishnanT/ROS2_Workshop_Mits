@@ -674,6 +674,12 @@ void loop() {
 }
 
 ```
+## Command to list USB serial devices
+```bash
+
+ls -l /dev/ttyUSB* /dev/ttyACM*
+
+```
 # Code for ESP32 - ultrasonic sensor BASIC
 
 ```bash
