@@ -569,14 +569,12 @@ ros2 topic echo /micro_ros_arduino_node_publisher
 ```bash
 
 #include <micro_ros_arduino.h>
+#include <stdio.h>
 #include <rcl/rcl.h>
 #include <rcl/error_handling.h>
 #include <rclc/rclc.h>
 #include <rclc/executor.h>
 #include <std_msgs/msg/int32.h>
-
-#define SERIAL_PORT Serial
-#define MICRO_ROS_TRANSPORT_SERIAL
 
 rcl_publisher_t publisher;
 std_msgs__msg__Int32 msg;
@@ -590,74 +588,90 @@ rcl_timer_t timer;
 #define TRIG_PIN 12
 #define ECHO_PIN 14
 
-#define RCCHECK(fn) { rcl_ret_t temp_rc = fn; if((temp_rc != RCL_RET_OK)){error_loop();} }
-#define RCSOFTCHECK(fn) { rcl_ret_t temp_rc = fn; if((temp_rc != RCL_RET_OK)){} }
+#define RCCHECK(fn) { rcl_ret_t temp_rc = fn; if((temp_rc != RCL_RET_OK)){error_loop();}}
+#define RCSOFTCHECK(fn) { rcl_ret_t temp_rc = fn; if((temp_rc != RCL_RET_OK)){}}
 
 void error_loop() {
-  while (1) {
+  while(1) {
     digitalWrite(LED_PIN, !digitalRead(LED_PIN));
     delay(100);
   }
 }
 
+// Function to measure the distance using the ultrasonic sensor
 long measure_distance() {
+  // Ensure trigger pin is low
   digitalWrite(TRIG_PIN, LOW);
   delayMicroseconds(2);
+  
+  // Trigger the ultrasonic pulse
   digitalWrite(TRIG_PIN, HIGH);
   delayMicroseconds(10);
   digitalWrite(TRIG_PIN, LOW);
 
+  // Measure the pulse duration on the echo pin
   long duration = pulseIn(ECHO_PIN, HIGH);
+
+  // Calculate the distance in cm (speed of sound is ~343 m/s)
   long distance_cm = duration * 0.034 / 2;
 
   return distance_cm;
 }
 
-void timer_callback(rcl_timer_t * timer, int64_t last_call_time) {
+void timer_callback(rcl_timer_t * timer, int64_t last_call_time) {  
   RCLC_UNUSED(last_call_time);
   if (timer != NULL) {
+    // Measure the distance and update the message
     msg.data = measure_distance();
     RCSOFTCHECK(rcl_publish(&publisher, &msg, NULL));
   }
 }
 
 void setup() {
+  set_microros_transports();
+  
   pinMode(LED_PIN, OUTPUT);
   digitalWrite(LED_PIN, HIGH);
+  
   pinMode(TRIG_PIN, OUTPUT);
   pinMode(ECHO_PIN, INPUT);
-
+  
   delay(2000);
 
-  set_microros_serial_transport(SERIAL_PORT);
-
   allocator = rcl_get_default_allocator();
+
+  // Create init_options
   RCCHECK(rclc_support_init(&support, 0, NULL, &allocator));
+
+  // Create node
   RCCHECK(rclc_node_init_default(&node, "ultrasonic_sensor_node", "", &support));
+
+  // Create publisher
   RCCHECK(rclc_publisher_init_default(
     &publisher,
     &node,
     ROSIDL_GET_MSG_TYPE_SUPPORT(std_msgs, msg, Int32),
     "ultrasonic_sensor_distance"));
 
-  const unsigned int timer_timeout = 100;
+  // Create timer (100 ms interval)
+  const unsigned int timer_timeout = 100; // Adjusted to 100 ms
   RCCHECK(rclc_timer_init_default(
     &timer,
     &support,
     RCL_MS_TO_NS(timer_timeout),
     timer_callback));
 
+  // Create executor
   RCCHECK(rclc_executor_init(&executor, &support.context, 1, &allocator));
   RCCHECK(rclc_executor_add_timer(&executor, &timer));
 
-  msg.data = 0;
+  msg.data = 0; // Initialize message data
 }
 
 void loop() {
-  delay(10);
+  delay(10); // Reduced delay to minimize blocking
   RCSOFTCHECK(rclc_executor_spin_some(&executor, RCL_MS_TO_NS(10)));
 }
-
 
 ```
 # Code for ESP32 - ultrasonic sensor BASIC
